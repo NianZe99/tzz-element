@@ -2,7 +2,7 @@
   "name": "tzz-element-workspace",
   "private": true,
   "scripts": {
-    "build": "pnpm -C packages/components build",
+    "build": "pnpm --filter @mario/tzz-element run build",
     "dev": "dumi dev",
     "docs:build": "dumi build",
     "docs:preview": "dumi preview",
@@ -11,7 +11,7 @@
     "lint:es": "eslint \"{packages,docs}/**/*.{js,jsx,ts,tsx,md}\"",
     "prepare": "husky install && dumi setup",
     "start": "npm run dev",
-    "test": "pnpm -C packages/components test"
+    "test": "pnpm --filter @mario/tzz-element run test --if-present"
   },
   "commitlint": {
     "extends": [
