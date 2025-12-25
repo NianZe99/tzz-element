@@ -11,7 +11,7 @@
     "lint:es": "eslint \"{packages,docs}/**/*.{js,jsx,ts,tsx,md}\"",
     "prepare": "husky install && dumi setup",
     "start": "npm run dev",
-    "test:fast": "pnpm --filter @mario/tzz-element build && pnpm --filter @mario/tzz-element-tests test"
+    "test:fast": "pnpm --filter @mario/tzz-element-tests test"
   },
   "commitlint": {
     "extends": [
