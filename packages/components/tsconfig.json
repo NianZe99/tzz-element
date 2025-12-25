@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "declaration": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+
+    // React 18 推荐（如果你想保留旧 runtime，也可以继续用 "react"）
+    "jsx": "react-jsx",
+
+    "baseUrl": ".",
+    "paths": {
+      // dumi 临时目录在仓库根部
+      "@@/*": ["../../.dumi/tmp/*"],
+
+      // 对齐你的真实包名（建议）
+      "@mario/tzz-element": ["src/index.ts"],
+      "@mario/tzz-element/*": ["./src/*"]
+    }
+  },
+  "include": ["src/**/*", "src/index.ts", "../../.dumirc.ts"],
+  "exclude": ["dist", "node_modules"]
+}

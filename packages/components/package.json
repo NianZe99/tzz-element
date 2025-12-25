@@ -1,0 +1,36 @@
+{
+  "name": "@mario/tzz-element",
+  "version": "0.0.1",
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "types": "./es/index.d.ts",
+      "import": "./es/index.js",
+      "require": "./lib/index.js"
+    }
+  },
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "types": "es/index.d.ts",
+  "files": [
+    "es",
+    "lib",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "father build",
+    "build:watch": "father dev"
+  },
+  "dependencies": {
+    "antd": "^6.1.1"
+  },
+  "peerDependencies": {
+    "antd": ">=6",
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
