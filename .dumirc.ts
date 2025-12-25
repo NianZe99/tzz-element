@@ -2,6 +2,9 @@ import { defineConfig } from 'dumi';
 import path from 'path';
 
 export default defineConfig({
+  // 配置站点路径
+  base: '/tzz-element/',
+  publicPath: '/tzz-element/',
   resolve: {
     docDirs: ['docs'],
     // 你的组件资产 md 在 packages/components/src/*
