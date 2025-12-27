@@ -22,7 +22,7 @@
     "build": "father build",
     "build:watch": "father dev"
   },
-  "dependencies": {
+  "devDependencies": {
     "antd": "^6.1.1"
   },
   "peerDependencies": {

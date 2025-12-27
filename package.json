@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "build": "pnpm --filter @mario/tzz-element run build",
+    "changeset": "changeset",
     "dev": "dumi dev",
     "docs:build": "dumi build",
     "docs:preview": "dumi preview",
@@ -10,8 +11,10 @@
     "lint:css": "stylelint \"{packages,docs}/**/*.{css,less}\"",
     "lint:es": "eslint \"{packages,docs}/**/*.{js,jsx,ts,tsx,md}\"",
     "prepare": "husky install && dumi setup",
+    "release": "pnpm build && pnpm --filter @mario/tzz-element-tests test && changeset publish",
     "start": "npm run dev",
-    "test:fast": "pnpm --filter @mario/tzz-element-tests test"
+    "test:fast": "pnpm --filter @mario/tzz-element-tests test",
+    "version-packages": "changeset version"
   },
   "commitlint": {
     "extends": [
