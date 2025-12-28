@@ -31,6 +31,27 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
+      - name: Check NPM_TOKEN (safe)
+        run: node -e "const t=process.env.NPM_TOKEN||''; console.log('NPM_TOKEN length:', t.length); console.log('hasWhitespace:', /\\s/.test(t));"
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create ~/.npmrc (trim token)
+        run: |
+          TOKEN="$(printf %s "$NPM_TOKEN" | tr -d '\r\n')"
+          if [ -z "$TOKEN" ]; then
+            echo "NPM_TOKEN is empty after trim" >&2
+            exit 1
+          fi
+          cat > "$HOME/.npmrc" <<EOF
+          registry=https://registry.npmjs.org/
+          @mario:registry=https://registry.npmjs.org/
+          //registry.npmjs.org/:_authToken=$TOKEN
+          always-auth=true
+          EOF
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       # 版本 PR or 发布：changesets/action 会自动判断
       - name: Create Version PR or Publish
         uses: changesets/action@v1
@@ -43,4 +64,3 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
