@@ -12,6 +12,7 @@
     "lint:es": "eslint \"{packages,docs}/**/*.{js,jsx,ts,tsx,md}\"",
     "prepare": "husky install && dumi setup",
     "release": "pnpm build && pnpm --filter @mario/tzz-element-tests test && changeset publish",
+    "release:publish": "pnpm build && pnpm --filter @mario/tzz-element-tests test && pnpm changeset publish",
     "start": "npm run dev",
     "test:fast": "pnpm --filter @mario/tzz-element-tests test",
     "version-packages": "changeset version"
