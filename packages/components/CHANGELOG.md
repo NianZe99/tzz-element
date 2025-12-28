@@ -1,4 +1,4 @@
-# @mario/tzz-element
+# @mariotzz/tzz-element
 
 ## 1.0.0
 

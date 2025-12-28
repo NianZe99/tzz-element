@@ -1,5 +1,5 @@
 // 写一个冒烟测试
-import { Button } from '@mario/tzz-element';
+import { Button } from '@mariotzz/tzz-element';
 import { render, screen } from '@testing-library/react';
 
 test('library can be imported and Button renders', () => {

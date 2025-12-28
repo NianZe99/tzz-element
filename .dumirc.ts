@@ -18,7 +18,7 @@ export default defineConfig({
 
   // 关键：把你发布包名 alias 到源码入口，保证 dumi dev 时不走 dist
   alias: {
-    '@mario/tzz-element': path.resolve(
+    '@mariotzz/tzz-element': path.resolve(
       __dirname,
       'packages/components/src/index.ts',
     ),

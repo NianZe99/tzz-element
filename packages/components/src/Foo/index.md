@@ -3,7 +3,7 @@
 This is an example component.
 
 ```jsx
-import { Foo } from '@mario/tzz-element';
+import { Foo } from '@mariotzz/tzz-element';
 
 export default () => <Foo title="Hello dumi!" />;
 ```

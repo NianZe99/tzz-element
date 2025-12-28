@@ -77,7 +77,7 @@ importers:
 
   packages/tests:
     dependencies:
-      '@mario/tzz-element':
+      '@mariotzz/tzz-element':
         specifier: workspace:*
         version: link:../components
       antd:

@@ -14,8 +14,8 @@
       "@@/*": ["../../.dumi/tmp/*"],
 
       // 对齐你的真实包名（建议）
-      "@mario/tzz-element": ["src/index.ts"],
-      "@mario/tzz-element/*": ["./src/*"]
+      "@mariotzz/tzz-element": ["src/index.ts"],
+      "@mariotzz/tzz-element/*": ["./src/*"]
     }
   },
   "include": ["src/**/*", "src/index.ts", "../../.dumirc.ts"],

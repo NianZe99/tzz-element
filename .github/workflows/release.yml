@@ -45,7 +45,7 @@ jobs:
           fi
           cat > "$HOME/.npmrc" <<EOF
           registry=https://registry.npmjs.org/
-          @mario:registry=https://registry.npmjs.org/
+          @mariotzz:registry=https://registry.npmjs.org/
           //registry.npmjs.org/:_authToken=$TOKEN
           always-auth=true
           EOF
