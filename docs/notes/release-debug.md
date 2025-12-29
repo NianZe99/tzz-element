@@ -1,0 +1,37 @@
+# CI/CD 发布踩坑记录（dumi + pnpm workspace + changesets）
+
+## 背景
+
+- monorepo：pnpm workspace
+- 组件构建：father（ESM + CJS）
+- 文档：dumi
+- 发包：changesets + GitHub Actions
+- 包名：@mariotzz/tzz-element
+
+## 问题与解决
+
+### 1. Actions 无法创建 Version PR
+
+**现象**：`GitHub Actions is not permitted to create or approve pull requests`
+**原因**：仓库未开启允许 Actions 创建 PR
+**解决**：Settings → Actions → General → 开启 Read and write permissions + Allow create/approve PR
+
+### 2. scope 不属于自己导致 publish 失败
+
+**现象**：发布 `@mario/tzz-element` 返回 404/403
+**原因**：`@mario` scope 不属于当前 npm 账号
+**解决**：改包名为 `@mariotzz/tzz-element`
+
+### 3. npm 2FA 导致 publish 403
+
+**现象**：`Two-factor authentication ... is required to publish packages`
+**原因**：账号开启了发布需要 2FA
+**解决**：创建 granular token 并开启 bypass 2FA，写入 GitHub Secrets `NPM_TOKEN`
+
+### 4. CI 里 npm whoami 401（setup-node 改写 userconfig）
+
+**现象**：`npm whoami` 401
+**原因**：setup-node 设置了 `NPM_CONFIG_USERCONFIG=/home/runner/work/_temp/.npmrc`，npm 实际读的是这个文件，不是 `~/.npmrc`,导致 actions 中构建一直失败，因为指向了一个临时的`_temp/.npmrc`
+**解决**：在 workflow 中把 token 写到 `npm config get userconfig` 指向的 npmrc
+
+## 最终可用的 Release Workflow
