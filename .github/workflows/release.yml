@@ -31,44 +31,34 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      - name: Check NPM_TOKEN (safe)
-        run: node -e "const t=process.env.NPM_TOKEN||''; console.log('NPM_TOKEN length:', t.length); console.log('hasWhitespace:', /\\s/.test(t));"
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Create ~/.npmrc (trim token)
+      # ✅ 写到 npm 实际使用的 userconfig（setup-node 会设置到 /home/runner/work/_temp/.npmrc）
+      - name: Configure npm auth
         run: |
+          USERCONFIG="$(npm config get userconfig)"
           TOKEN="$(printf %s "$NPM_TOKEN" | tr -d '\r\n')"
           if [ -z "$TOKEN" ]; then
-            echo "NPM_TOKEN is empty after trim" >&2
+            echo "NPM_TOKEN is empty" >&2
             exit 1
           fi
-          cat > "$HOME/.npmrc" <<EOF
+          mkdir -p "$(dirname "$USERCONFIG")"
+          cat > "$USERCONFIG" <<EOF
           registry=https://registry.npmjs.org/
           @mariotzz:registry=https://registry.npmjs.org/
           //registry.npmjs.org/:_authToken=$TOKEN
           always-auth=true
           EOF
+          echo "NPM_CONFIG_USERCONFIG=$USERCONFIG" >> $GITHUB_ENV
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Verify npm auth (safe)
-        run: |
-          echo "userconfig=$(npm config get userconfig)"
-          echo "NPM_CONFIG_USERCONFIG=$NPM_CONFIG_USERCONFIG"
-          npm whoami --registry=https://registry.npmjs.org
-          npm ping --registry=https://registry.npmjs.org
-          echo "---- ~/.npmrc (masked) ----"
-          sed -E 's#(_authToken=).*#\1***#' "$HOME/.npmrc"
+      # ✅ 认证闸门：没登录直接 fail，避免跑到 publish 才炸
+      - name: Verify npm auth
+        run: npm whoami --registry=https://registry.npmjs.org
 
-      # 版本 PR or 发布：changesets/action 会自动判断
       - name: Create Version PR or Publish
         uses: changesets/action@v1
         with:
-          # 生成版本号 + changelog（提交到 Version PR）
           version: pnpm changeset version
-
-          # 合并 Version PR 后会执行 publish
           publish: pnpm release:publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
