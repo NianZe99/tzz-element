@@ -54,6 +54,8 @@ jobs:
 
       - name: Verify npm auth (safe)
         run: |
+          echo "userconfig=$(npm config get userconfig)"
+          echo "NPM_CONFIG_USERCONFIG=$NPM_CONFIG_USERCONFIG"
           npm whoami --registry=https://registry.npmjs.org
           npm ping --registry=https://registry.npmjs.org
           echo "---- ~/.npmrc (masked) ----"
