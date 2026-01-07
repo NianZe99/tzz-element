@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       HUSKY: 0
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }} # ✅ 关键：job 级别注入
     steps:
       - uses: actions/checkout@v4
         with:
