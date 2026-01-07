@@ -78,7 +78,7 @@ export function mergeHandlers<E>(
  * - 仅支持单个 ReactElement
  */
 export interface SlotProps extends React.HTMLAttributes<HTMLElement> {
-  children: React.ReactElement;
+  children: React.ReactElement<any>;
 }
 
 export const Slot = React.forwardRef<HTMLElement, SlotProps>(function Slot(
@@ -87,7 +87,7 @@ export const Slot = React.forwardRef<HTMLElement, SlotProps>(function Slot(
 ) {
   if (!React.isValidElement(children)) return null;
 
-  const childProps = children.props as React.HTMLAttributes<HTMLElement>;
+  const childProps = children.props as any;
 
   const mergedClassName = cn(childProps.className, className);
   const mergedStyle = { ...(childProps.style || {}), ...(style || {}) };
@@ -103,7 +103,7 @@ export const Slot = React.forwardRef<HTMLElement, SlotProps>(function Slot(
 
   const mergedRef = composeRefs<any>((children as any).ref, forwardedRef);
 
-  return React.cloneElement(children, {
+  return React.cloneElement<any>(children, {
     ...rest,
     ...childProps,
     className: mergedClassName,
