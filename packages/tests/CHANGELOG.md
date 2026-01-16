@@ -1,5 +1,13 @@
 # @mariotzz/tzz-element-tests
 
+## 0.0.3
+
+### Patch Changes
+
+- ee926d3: fix and test new Button
+- Updated dependencies [ee926d3]
+  - @mariotzz/tzz-element@2.1.0
+
 ## 0.0.2
 
 ### Patch Changes
