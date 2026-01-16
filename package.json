@@ -9,7 +9,7 @@
     "docs:preview": "dumi preview",
     "lint": "npm run lint:es && npm run lint:css",
     "lint:css": "stylelint \"{packages,docs}/**/*.{css,less}\"",
-    "lint:es": "eslint \"{packages,docs}/**/*.{js,jsx,ts,tsx,md}\"",
+    "lint:es": "eslint \"{packages,docs}/**/*.{js,jsx,ts,tsx}\"",
     "prepare": "husky install && dumi setup",
     "publish:local": "dotenv -e .env.local -- pnpm changeset publish",
     "release": "pnpm build && pnpm --filter @mariotzz/tzz-element-tests test && changeset publish",

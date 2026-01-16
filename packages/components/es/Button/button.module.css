@@ -1,0 +1,164 @@
+/* button.module.css
+   设计目标：
+   - 使用 CSS Variables 方便主题化
+   - focus-visible 清晰可见（键盘才出现）
+   - disabled/loading 统一语义（原生 disabled + data-disabled）
+*/
+
+.button {
+  --tzz-radius: 10px;
+  --tzz-fg: #111827;
+  --tzz-bg: #fff;
+  --tzz-border: rgba(17, 24, 39, 14%);
+  --tzz-primary: #1677ff;
+  --tzz-primary-fg: #fff;
+  --tzz-danger: #ef4444;
+  --tzz-danger-fg: #fff;
+  --tzz-ring: rgba(22, 119, 255, 35%);
+
+  appearance: none;
+  border: 1px solid var(--tzz-border);
+  background: var(--tzz-bg);
+  color: var(--tzz-fg);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  gap: 8px;
+  white-space: nowrap;
+  user-select: none;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  border-radius: var(--tzz-radius);
+  transition: background-color 160ms ease, border-color 160ms ease,
+    color 160ms ease, box-shadow 160ms ease, transform 80ms ease;
+  cursor: pointer;
+}
+
+/* sizes */
+.sm {
+  height: 32px;
+  padding: 0 12px;
+  font-size: 13px;
+}
+
+.md {
+  height: 36px;
+  padding: 0 14px;
+  font-size: 14px;
+}
+
+.lg {
+  height: 42px;
+  padding: 0 18px;
+  font-size: 15px;
+}
+
+.icon {
+  height: 36px;
+  width: 36px;
+  padding: 0;
+}
+
+/* block */
+.block {
+  width: 100%;
+}
+
+/* variants */
+.default {
+  background: var(--tzz-bg);
+  color: var(--tzz-fg);
+  border-color: var(--tzz-border);
+}
+
+.primary {
+  background: var(--tzz-primary);
+  color: var(--tzz-primary-fg);
+  border-color: transparent;
+}
+
+.secondary {
+  background: rgba(17, 24, 39, 6%);
+  color: var(--tzz-fg);
+  border-color: rgba(17, 24, 39, 8%);
+}
+
+.ghost {
+  background: transparent;
+  color: var(--tzz-fg);
+  border-color: transparent;
+}
+
+.link {
+  background: transparent;
+  color: var(--tzz-primary);
+  border-color: transparent;
+  padding-left: 0;
+  padding-right: 0;
+  height: auto;
+}
+
+.destructive {
+  background: var(--tzz-danger);
+  color: var(--tzz-danger-fg);
+  border-color: transparent;
+}
+
+/* states: hover/active (exclude disabled/loading) */
+.button:not([data-disabled='true']):not([data-loading='true']):hover {
+  filter: brightness(0.98);
+}
+
+.default:not([data-disabled='true']):not([data-loading='true']):hover {
+  background: rgba(17, 24, 39, 3%);
+}
+
+.ghost:not([data-disabled='true']):not([data-loading='true']):hover {
+  background: rgba(17, 24, 39, 5%);
+}
+
+.link:not([data-disabled='true']):not([data-loading='true']):hover {
+  text-decoration: underline;
+}
+
+.button:not([data-disabled='true']):not([data-loading='true']):active {
+  transform: translateY(0.5px);
+}
+
+/* focus-visible */
+.button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px var(--tzz-ring);
+}
+
+/* disabled/loading */
+.button[disabled],
+.button[data-disabled='true'] {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* spinner / icon slots */
+.iconSlot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+
+.spinner {
+  width: 1em;
+  height: 1em;
+  border: 2px solid currentcolor;
+  border-right-color: transparent;
+  border-radius: 9999px;
+  animation: spin 800ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -7,29 +7,28 @@ var __export = (target, all) => {
     __defProp(target, name, { get: all[name], enumerable: true });
 };
 var __copyProps = (to, from, except, desc) => {
-  if (from && typeof from === "object" || typeof from === "function") {
+  if ((from && typeof from === 'object') || typeof from === 'function') {
     for (let key of __getOwnPropNames(from))
       if (!__hasOwnProp.call(to, key) && key !== except)
-        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+        __defProp(to, key, {
+          get: () => from[key],
+          enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable,
+        });
   }
   return to;
 };
-var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+var __toCommonJS = (mod) =>
+  __copyProps(__defProp({}, '__esModule', { value: true }), mod);
 
-// src/Button/index.tsx
+// src/Button/index.ts
 var Button_exports = {};
 __export(Button_exports, {
-  Button: () => Button,
-  default: () => Button_default
+  Button: () => import_button.Button,
 });
 module.exports = __toCommonJS(Button_exports);
-var import_antd = require("antd");
-var import_jsx_runtime = require("react/jsx-runtime");
-var Button = ({ dangerLight, ...props }) => {
-  return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(import_antd.Button, { ...props, danger: dangerLight ?? props.danger });
-};
-var Button_default = Button;
+var import_button = require('./button');
 // Annotate the CommonJS export names for ESM import in node:
-0 && (module.exports = {
-  Button
-});
+0 &&
+  (module.exports = {
+    Button,
+  });

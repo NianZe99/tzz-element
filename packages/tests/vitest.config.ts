@@ -1,17 +1,16 @@
-import path from 'node:path';
 import { defineConfig } from 'vitest/config';
 export default defineConfig({
   resolve: {
     alias: {
-      // 让tests直接引用src下的代码，并且是从源码的入口进入，而不是dist编译后的代码
-      '@mariozz/tzz-element': path.resolve(
-        __dirname,
+      // ✅ 强制把包名解析到源码入口（不是 es/ lib/）
+      '@mariotzz/tzz-element': new URL(
         '../components/src/index.ts',
-      ),
+        import.meta.url,
+      ).pathname,
     },
   },
   test: {
-    globals: true, // ✅ 让 test/expect 变全局
+    globals: true, // ✅ 让 test/expect/describe 变全局
     environment: 'jsdom',
     setupFiles: './vitest.setup.ts',
   },

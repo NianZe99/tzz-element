@@ -1,0 +1,6 @@
+# 构建产物
+packages/components/es/
+packages/components/lib/
+
+# 仅由 prettier 处理的文档
+**/*.md

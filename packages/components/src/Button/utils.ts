@@ -59,15 +59,13 @@ export function composeRefs<T>(...refs: Array<React.Ref<T> | undefined>) {
  * - 如果 ours 调用了 preventDefault / stopPropagation，theirs 仍可能执行（取决于你是否 early return）
  *   所以建议在 ours 内部对 disabled/loading 做 early return。
  */
-export function mergeHandlers<E>(
+export function mergeHandlers<E extends { defaultPrevented?: boolean }>(
   ours?: (event: E) => void,
   theirs?: (event: E) => void,
 ) {
   return (event: E) => {
     ours?.(event);
-    // 如果 ours 已经阻止默认行为（disabled/loading 场景），就不要再触发子元素的 handler
-    if ((event as any).defaultPrevented) return;
-
+    if ((event as any).defaultPrevented) return; // ✅ disabled/loading 时不再触发子元素 handler
     theirs?.(event);
   };
 }
