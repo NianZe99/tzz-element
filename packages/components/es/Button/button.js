@@ -18,6 +18,8 @@ function _typeof(o) {
   );
 }
 var _excluded = [
+  'shape',
+  'rounded',
   'variant',
   'size',
   'block',
@@ -143,7 +145,10 @@ function hasReadableText(node) {
  * - focus-visible 清晰可见
  */
 export var Button = /*#__PURE__*/ React.forwardRef(function Button(props, ref) {
-  var _props$variant = props.variant,
+  var shape = props.shape,
+    _props$rounded = props.rounded,
+    rounded = _props$rounded === void 0 ? false : _props$rounded,
+    _props$variant = props.variant,
     variant = _props$variant === void 0 ? 'default' : _props$variant,
     _props$size = props.size,
     size = _props$size === void 0 ? 'md' : _props$size,
@@ -168,7 +173,12 @@ export var Button = /*#__PURE__*/ React.forwardRef(function Button(props, ref) {
     type = props.type,
     rest = _objectWithoutProperties(props, _excluded);
   var isDisabled = disabled || loading;
-
+  var resolvedShape =
+    shape !== null && shape !== void 0
+      ? shape
+      : rounded
+      ? 'rounded'
+      : 'default';
   // icon-only 场景的可访问性提示（开发态）
   if (process.env.NODE_ENV !== 'production') {
     if (size === 'icon') {
@@ -209,10 +219,16 @@ export var Button = /*#__PURE__*/ React.forwardRef(function Button(props, ref) {
     }
     onKeyDown === null || onKeyDown === void 0 || onKeyDown(e);
   };
+  var shapeClassMap = {
+    default: styles.shapeDefault,
+    rounded: styles.shapeRounded,
+    pill: styles.shapePill,
+  };
   var classes = cn(
     styles.button,
     styles[variant],
     styles[size],
+    shapeClassMap[resolvedShape],
     block && styles.block,
     className,
   );
@@ -265,6 +281,8 @@ export var Button = /*#__PURE__*/ React.forwardRef(function Button(props, ref) {
       'data-variant': variant,
       'data-size': size,
       'data-disabled': isDisabled ? 'true' : 'false',
+      'data-shape': resolvedShape,
+      // ✅ 新增
       'data-loading': loading ? 'true' : 'false',
       'aria-busy': loading ? true : undefined,
       onClick: handleClick,

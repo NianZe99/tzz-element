@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styles from './button.module.css';
-import type { ButtonProps } from './types';
+import type { ButtonCorner, ButtonProps } from './types';
 import { Slot, cn } from './utils';
 
 /**
@@ -26,6 +26,8 @@ function hasReadableText(node: React.ReactNode): boolean {
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   function Button(props, ref) {
     const {
+      shape,
+      rounded = false,
       variant = 'default',
       size = 'md',
       block = false,
@@ -51,7 +53,8 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     } = props;
 
     const isDisabled = disabled || loading;
-
+    const resolvedShape: ButtonCorner =
+      shape ?? (rounded ? 'rounded' : 'default');
     // icon-only 场景的可访问性提示（开发态）
     if (process.env.NODE_ENV !== 'production') {
       if (size === 'icon') {
@@ -94,10 +97,17 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       onKeyDown?.(e);
     };
 
+    const shapeClassMap = {
+      default: styles.shapeDefault,
+      rounded: styles.shapeRounded,
+      pill: styles.shapePill,
+    } as const;
+
     const classes = cn(
       styles.button,
       styles[variant],
       styles[size],
+      shapeClassMap[resolvedShape],
       block && styles.block,
       className,
     );
@@ -142,6 +152,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       'data-variant': variant,
       'data-size': size,
       'data-disabled': isDisabled ? 'true' : 'false',
+      'data-shape': resolvedShape, // ✅ 新增
       'data-loading': loading ? 'true' : 'false',
       'aria-busy': loading ? true : undefined,
       onClick: handleClick,

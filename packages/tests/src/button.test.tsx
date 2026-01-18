@@ -10,6 +10,20 @@ describe('Button', () => {
     expect(screen.getByRole('button', { name: 'Save' })).toBeInTheDocument();
   });
 
+  test('shape should be reflected via data-shape', () => {
+    render(<Button shape="pill">Pill</Button>);
+    expect(screen.getByRole('button', { name: 'Pill' })).toHaveAttribute(
+      'data-shape',
+      'pill',
+    );
+
+    render(<Button rounded>Rounded</Button>);
+    expect(screen.getByRole('button', { name: 'Rounded' })).toHaveAttribute(
+      'data-shape',
+      'rounded',
+    );
+  });
+
   test('defaults to type="button" (should not submit forms)', async () => {
     const user = userEvent.setup();
     const onSubmit = vi.fn((e: React.FormEvent) => e.preventDefault());

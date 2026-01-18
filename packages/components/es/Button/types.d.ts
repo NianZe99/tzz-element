@@ -8,8 +8,21 @@ export type ButtonVariant =
   | 'destructive';
 export type ButtonSize = 'sm' | 'md' | 'lg' | 'icon';
 export type ButtonIconPosition = 'start' | 'end';
+export type ButtonCorner = 'default' | 'rounded' | 'pill';
 type NativeButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
 export interface ButtonProps extends Omit<NativeButtonProps, 'disabled'> {
+  /**
+   * 形状：控制圆角风格
+   * - default: 默认圆角
+   * - rounded: 更大的圆角
+   * - pill: 胶囊按钮（左右完全圆）
+   */
+  shape?: ButtonCorner;
+  /**
+   * 语法糖：等价于 shape="rounded"
+   * - 若同时传 shape，则以 shape 为准
+   */
+  rounded?: boolean;
   /**
    * 视觉变体
    */

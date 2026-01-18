@@ -29,20 +29,26 @@ group:
 
 <code src="./demos/as-child.tsx"></code>
 
+## 形状 Shape
+
+<code src="./demos/shape.tsx"></code>
+
 ## API
 
-| Prop             | Type                                                              |   Default | Description                                   |
-| ---------------- | ----------------------------------------------------------------- | --------: | --------------------------------------------- |
-| variant          | `default \| primary \| secondary \| ghost \| link \| destructive` | `default` | 视觉变体                                      |
-| size             | `sm \| md \| lg \| icon`                                          |      `md` | 尺寸（icon 为纯图标按钮）                     |
-| block            | `boolean`                                                         |   `false` | 撑满父容器宽度                                |
-| disabled         | `boolean`                                                         |   `false` | 禁用（asChild 时用 aria-disabled + 阻止交互） |
-| loading          | `boolean`                                                         |   `false` | 加载态（自动禁用交互，aria-busy）             |
-| loadingText      | `ReactNode`                                                       |         - | loading 文案                                  |
-| startIcon        | `ReactNode`                                                       |         - | 左侧图标                                      |
-| endIcon          | `ReactNode`                                                       |         - | 右侧图标                                      |
-| spinnerPlacement | `start \| end`                                                    |   `start` | spinner 位置                                  |
-| asChild          | `boolean`                                                         |   `false` | 多态渲染（Slot）                              |
+| Prop             | Type                                                              |   Default | Description                                    |
+| ---------------- | ----------------------------------------------------------------- | --------: | ---------------------------------------------- |
+| variant          | `default \| primary \| secondary \| ghost \| link \| destructive` | `default` | 视觉变体                                       |
+| size             | `sm \| md \| lg \| icon`                                          |      `md` | 尺寸（icon 为纯图标按钮）                      |
+| block            | `boolean`                                                         |   `false` | 撑满父容器宽度                                 |
+| disabled         | `boolean`                                                         |   `false` | 禁用（asChild 时用 aria-disabled + 阻止交互）  |
+| loading          | `boolean`                                                         |   `false` | 加载态（自动禁用交互，aria-busy）              |
+| loadingText      | `ReactNode`                                                       |         - | loading 文案                                   |
+| startIcon        | `ReactNode`                                                       |         - | 左侧图标                                       |
+| endIcon          | `ReactNode`                                                       |         - | 右侧图标                                       |
+| spinnerPlacement | `start \| end`                                                    |   `start` | spinner 位置                                   |
+| asChild          | `boolean`                                                         |   `false` | 多态渲染（Slot）                               |
+| shape            | `default \| rounded \| pill`                                      | `default` | 形状（圆角风格）                               |
+| rounded          | `boolean`                                                         |   `false` | 语法糖：等价于 `shape="rounded"`（shape 优先） |
 
 ## 无障碍说明
 

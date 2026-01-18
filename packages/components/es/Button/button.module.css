@@ -162,3 +162,18 @@
     transform: rotate(360deg);
   }
 }
+
+/* shapes */
+.shapeDefault {
+  border-radius: var(--tzz-radius);
+}
+
+/* 更大的圆角 */
+.shapeRounded {
+  border-radius: 16px;
+}
+
+/* 胶囊按钮：左右完全圆 */
+.shapePill {
+  border-radius: 9999px;
+}

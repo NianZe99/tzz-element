@@ -56,6 +56,8 @@ function hasReadableText(node) {
 }
 var Button = React.forwardRef(function Button2(props, ref) {
   const {
+    shape,
+    rounded = false,
     variant = 'default',
     size = 'md',
     block = false,
@@ -76,6 +78,7 @@ var Button = React.forwardRef(function Button2(props, ref) {
     ...rest
   } = props;
   const isDisabled = disabled || loading;
+  const resolvedShape = shape ?? (rounded ? 'rounded' : 'default');
   if (process.env.NODE_ENV !== 'production') {
     if (size === 'icon') {
       const hasText = hasReadableText(children);
@@ -105,10 +108,16 @@ var Button = React.forwardRef(function Button2(props, ref) {
     }
     onKeyDown == null ? void 0 : onKeyDown(e);
   };
+  const shapeClassMap = {
+    default: import_button_module.default.shapeDefault,
+    rounded: import_button_module.default.shapeRounded,
+    pill: import_button_module.default.shapePill,
+  };
   const classes = (0, import_utils.cn)(
     import_button_module.default.button,
     import_button_module.default[variant],
     import_button_module.default[size],
+    shapeClassMap[resolvedShape],
     block && import_button_module.default.block,
     className,
   );
@@ -145,6 +154,8 @@ var Button = React.forwardRef(function Button2(props, ref) {
     'data-variant': variant,
     'data-size': size,
     'data-disabled': isDisabled ? 'true' : 'false',
+    'data-shape': resolvedShape,
+    // ✅ 新增
     'data-loading': loading ? 'true' : 'false',
     'aria-busy': loading ? true : void 0,
     onClick: handleClick,
