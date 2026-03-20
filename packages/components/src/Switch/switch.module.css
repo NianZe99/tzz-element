@@ -1,0 +1,119 @@
+@import '../styles/tokens.css';
+
+.switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-width: 44px;
+  height: 22px;
+  border: none;
+  border-radius: 100px;
+  background: var(--tzz-color-text-quaternary);
+  cursor: pointer;
+  padding: 0;
+  transition: background var(--tzz-duration) var(--tzz-easing);
+  outline: none;
+  vertical-align: middle;
+  user-select: none;
+}
+
+.switch:focus-visible {
+  box-shadow: 0 0 0 var(--tzz-ring-width) var(--tzz-ring-color);
+}
+
+.checked {
+  background: var(--tzz-color-primary);
+}
+
+/* Small */
+
+.small {
+  min-width: 28px;
+  height: 16px;
+}
+
+/* Disabled */
+
+.disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* Handle */
+
+.handle {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 20%);
+  transition: all var(--tzz-duration) var(--tzz-easing);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checked .handle {
+  left: calc(100% - 20px);
+}
+
+.small .handle {
+  width: 12px;
+  height: 12px;
+}
+
+.small.checked .handle {
+  left: calc(100% - 14px);
+}
+
+/* Loading spinner inside handle */
+
+.handleSpinner {
+  width: 10px;
+  height: 10px;
+  border: 1.5px solid var(--tzz-color-primary);
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: tzz-switch-spin 800ms linear infinite;
+}
+
+.small .handleSpinner {
+  width: 7px;
+  height: 7px;
+  border-width: 1px;
+}
+
+@keyframes tzz-switch-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Inner text */
+
+.inner {
+  display: flex;
+  align-items: center;
+  font-size: var(--tzz-font-size-sm);
+  color: #fff;
+  padding: 0 7px 0 25px;
+  min-height: 100%;
+  white-space: nowrap;
+  transition: padding var(--tzz-duration) var(--tzz-easing);
+}
+
+.checked .inner {
+  padding: 0 25px 0 7px;
+}
+
+.small .inner {
+  padding: 0 5px 0 18px;
+  font-size: 10px;
+}
+
+.small.checked .inner {
+  padding: 0 18px 0 5px;
+}

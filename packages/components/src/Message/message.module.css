@@ -1,0 +1,105 @@
+@import '../styles/tokens.css';
+
+.container {
+  position: fixed;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: var(--tzz-z-message);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.notice {
+  pointer-events: auto;
+  animation: tzz-msg-in var(--tzz-duration) var(--tzz-easing-out);
+}
+
+.noticeLeaving {
+  animation: tzz-msg-out var(--tzz-duration) var(--tzz-easing) forwards;
+}
+
+.content {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tzz-spacing-sm);
+  padding: 9px 12px;
+  background: var(--tzz-color-bg-elevated);
+  border-radius: var(--tzz-radius-lg);
+  box-shadow: var(--tzz-shadow);
+  font-size: var(--tzz-font-size);
+  font-family: var(--tzz-font-family);
+  line-height: var(--tzz-line-height);
+  color: var(--tzz-color-text);
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--tzz-font-size-lg);
+  line-height: 0;
+}
+
+.iconSuccess {
+  color: var(--tzz-color-success);
+}
+
+.iconError {
+  color: var(--tzz-color-error);
+}
+
+.iconWarning {
+  color: var(--tzz-color-warning);
+}
+
+.iconInfo {
+  color: var(--tzz-color-primary);
+}
+
+.iconLoading {
+  color: var(--tzz-color-primary);
+}
+
+.spinner {
+  width: 1em;
+  height: 1em;
+  border: 2px solid currentcolor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: tzz-msg-spin 800ms linear infinite;
+}
+
+@keyframes tzz-msg-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes tzz-msg-in {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes tzz-msg-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 60px;
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(-100%);
+    max-height: 0;
+  }
+}

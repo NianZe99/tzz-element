@@ -1,0 +1,69 @@
+@import '../styles/tokens.css';
+
+.trigger {
+  display: inline-flex;
+}
+
+.overlay {
+  position: fixed;
+  z-index: var(--tzz-z-tooltip);
+  pointer-events: none;
+  animation: tzz-tooltip-in var(--tzz-duration-fast) var(--tzz-easing-out);
+}
+
+.inner {
+  padding: 6px 8px;
+  background: rgba(0, 0, 0, 85%);
+  color: #fff;
+  border-radius: var(--tzz-radius);
+  font-size: var(--tzz-font-size-sm);
+  line-height: var(--tzz-line-height);
+  word-wrap: break-word;
+  max-width: 250px;
+  box-shadow: var(--tzz-shadow-sm);
+}
+
+.arrow {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: rgba(0, 0, 0, 85%);
+  transform: rotate(45deg);
+}
+
+/* Arrow positions */
+.arrowTop {
+  bottom: -4px;
+  left: 50%;
+  margin-left: -4px;
+}
+
+.arrowBottom {
+  top: -4px;
+  left: 50%;
+  margin-left: -4px;
+}
+
+.arrowLeft {
+  right: -4px;
+  top: 50%;
+  margin-top: -4px;
+}
+
+.arrowRight {
+  left: -4px;
+  top: 50%;
+  margin-top: -4px;
+}
+
+@keyframes tzz-tooltip-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

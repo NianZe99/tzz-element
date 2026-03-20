@@ -1,0 +1,221 @@
+@import '../styles/tokens.css';
+
+.wrapper {
+  display: inline-block;
+  font-family: var(--tzz-font-family);
+}
+
+.trigger {
+  cursor: pointer;
+  display: inline-block;
+}
+
+.triggerDisabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.fileInput {
+  display: none;
+}
+
+/* File list */
+
+.fileList {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+}
+
+.fileItem {
+  display: flex;
+  align-items: center;
+  gap: var(--tzz-spacing-sm);
+  padding: 4px 8px;
+  border-radius: var(--tzz-radius);
+  transition: background var(--tzz-duration-fast);
+  font-size: var(--tzz-font-size);
+  line-height: 22px;
+}
+
+.fileItem:hover {
+  background: var(--tzz-color-fill-tertiary);
+}
+
+.fileIcon {
+  display: inline-flex;
+  color: var(--tzz-color-primary);
+  line-height: 0;
+  flex-shrink: 0;
+}
+
+.fileName {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--tzz-color-text);
+}
+
+.fileNameError {
+  color: var(--tzz-color-error);
+}
+
+.fileActions {
+  display: inline-flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.fileActionBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: var(--tzz-color-text-quaternary);
+  font-size: 14px;
+  padding: 0;
+  line-height: 0;
+  transition: color var(--tzz-duration-fast);
+}
+
+.fileActionBtn:hover {
+  color: var(--tzz-color-error);
+}
+
+/* Progress */
+
+.progress {
+  width: 100%;
+  height: 2px;
+  background: var(--tzz-color-fill-secondary);
+  border-radius: 1px;
+  overflow: hidden;
+  margin-top: 2px;
+}
+
+.progressBar {
+  height: 100%;
+  background: var(--tzz-color-primary);
+  border-radius: 1px;
+  transition: width var(--tzz-duration);
+}
+
+.progressBarError {
+  background: var(--tzz-color-error);
+}
+
+/* Dragger */
+
+.dragger {
+  border: 1px dashed var(--tzz-color-border);
+  border-radius: var(--tzz-radius-lg);
+  background: var(--tzz-color-fill-tertiary);
+  cursor: pointer;
+  transition: border-color var(--tzz-duration);
+  text-align: center;
+  padding: var(--tzz-spacing-lg) var(--tzz-spacing-xl);
+}
+
+.dragger:hover {
+  border-color: var(--tzz-color-primary);
+}
+
+.draggerActive {
+  border-color: var(--tzz-color-primary);
+  background: var(--tzz-color-primary-bg);
+}
+
+.draggerDisabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.draggerDisabled:hover {
+  border-color: var(--tzz-color-border);
+}
+
+.draggerIcon {
+  font-size: 48px;
+  color: var(--tzz-color-primary);
+  margin-bottom: var(--tzz-spacing-sm);
+  line-height: 0;
+}
+
+.draggerText {
+  font-size: var(--tzz-font-size-lg);
+  color: var(--tzz-color-text);
+}
+
+.draggerHint {
+  font-size: var(--tzz-font-size);
+  color: var(--tzz-color-text-secondary);
+  margin-top: var(--tzz-spacing-xs);
+}
+
+/* Picture card */
+
+.pictureCardList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--tzz-spacing-sm);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pictureCardItem {
+  width: 104px;
+  height: 104px;
+  border: 1px solid var(--tzz-color-border-secondary);
+  border-radius: var(--tzz-radius-lg);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pictureCardImg {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+.pictureCardOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity var(--tzz-duration-fast);
+}
+
+.pictureCardItem:hover .pictureCardOverlay {
+  opacity: 1;
+}
+
+.pictureCardUpload {
+  width: 104px;
+  height: 104px;
+  border: 1px dashed var(--tzz-color-border);
+  border-radius: var(--tzz-radius-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--tzz-color-text-quaternary);
+  font-size: var(--tzz-font-size);
+  transition: border-color var(--tzz-duration);
+  gap: var(--tzz-spacing-xs);
+}
+
+.pictureCardUpload:hover {
+  border-color: var(--tzz-color-primary);
+  color: var(--tzz-color-primary);
+}

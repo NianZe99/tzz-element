@@ -1,0 +1,100 @@
+@import '../styles/tokens.css';
+
+.space {
+  display: inline-flex;
+}
+
+.horizontal {
+  flex-direction: row;
+}
+
+.vertical {
+  flex-direction: column;
+}
+
+.wrap {
+  flex-wrap: wrap;
+}
+
+.alignStart {
+  align-items: flex-start;
+}
+
+.alignEnd {
+  align-items: flex-end;
+}
+
+.alignCenter {
+  align-items: center;
+}
+
+.alignBaseline {
+  align-items: baseline;
+}
+
+/* Space.Compact */
+
+.compact {
+  display: inline-flex;
+}
+
+.compactHorizontal {
+  flex-direction: row;
+}
+
+.compactVertical {
+  flex-direction: column;
+}
+
+.compactBlock {
+  display: flex;
+  width: 100%;
+}
+
+.compactHorizontal > *:not(:first-child) {
+  margin-left: -1px;
+}
+
+.compactVertical > *:not(:first-child) {
+  margin-top: -1px;
+}
+
+.compactHorizontal > *:first-child {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.compactHorizontal > *:last-child {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.compactHorizontal > *:not(:first-child):not(:last-child) {
+  border-radius: 0;
+}
+
+.compactVertical > *:first-child {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.compactVertical > *:last-child {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.compactVertical > *:not(:first-child):not(:last-child) {
+  border-radius: 0;
+}
+
+.compact > *:hover,
+.compact > *:focus-visible {
+  z-index: 1;
+  position: relative;
+}
+
+.split {
+  display: inline-flex;
+  align-items: center;
+  color: var(--tzz-color-border);
+}
