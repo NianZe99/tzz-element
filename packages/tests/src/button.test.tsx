@@ -10,21 +10,20 @@ describe('Button', () => {
     expect(screen.getByRole('button', { name: 'Save' })).toBeInTheDocument();
   });
 
-  test('shape should be reflected via data-shape', () => {
-    render(<Button shape="pill">Pill</Button>);
-    expect(screen.getByRole('button', { name: 'Pill' })).toHaveAttribute(
-      'data-shape',
-      'pill',
-    );
+  test('renders with type variants', () => {
+    const { rerender } = render(<Button type="primary">Primary</Button>);
+    expect(screen.getByRole('button')).toHaveAttribute('data-type', 'primary');
 
-    render(<Button rounded>Rounded</Button>);
-    expect(screen.getByRole('button', { name: 'Rounded' })).toHaveAttribute(
-      'data-shape',
-      'rounded',
-    );
+    rerender(<Button type="dashed">Dashed</Button>);
+    expect(screen.getByRole('button')).toHaveAttribute('data-type', 'dashed');
   });
 
-  test('defaults to type="button" (should not submit forms)', async () => {
+  test('renders with size variants', () => {
+    render(<Button size="large">Large</Button>);
+    expect(screen.getByRole('button')).toHaveAttribute('data-size', 'large');
+  });
+
+  test('defaults to htmlType="button" (should not submit forms)', async () => {
     const user = userEvent.setup();
     const onSubmit = vi.fn((e: React.FormEvent) => e.preventDefault());
 
@@ -38,13 +37,13 @@ describe('Button', () => {
     expect(onSubmit).not.toHaveBeenCalled();
   });
 
-  test('type="submit" should submit forms', async () => {
+  test('htmlType="submit" should submit forms', async () => {
     const user = userEvent.setup();
     const onSubmit = vi.fn((e: React.FormEvent) => e.preventDefault());
 
     render(
       <form onSubmit={onSubmit}>
-        <Button type="submit">Submit</Button>
+        <Button htmlType="submit">Submit</Button>
       </form>,
     );
 
@@ -87,6 +86,18 @@ describe('Button', () => {
     expect(onClick).not.toHaveBeenCalled();
   });
 
+  test('danger sets data-danger', () => {
+    render(<Button danger>Delete</Button>);
+    expect(screen.getByRole('button')).toHaveAttribute('data-danger', 'true');
+  });
+
+  test('renders as <a> when href is provided', () => {
+    render(<Button href="https://example.com">Link</Button>);
+    const el = screen.getByText('Link');
+    expect(el.tagName).toBe('A');
+    expect(el).toHaveAttribute('href', 'https://example.com');
+  });
+
   test('asChild injects props and respects disabled', async () => {
     const user = userEvent.setup();
     const childClick = vi.fn();
@@ -101,8 +112,6 @@ describe('Button', () => {
 
     const link = screen.getByText('Link');
     expect(link.tagName).toBe('A');
-
-    // asChild 禁用态语义
     expect(link).toHaveAttribute('aria-disabled', 'true');
     expect(link).toHaveAttribute('tabindex', '-1');
 
@@ -113,13 +122,7 @@ describe('Button', () => {
   test('icon-only without aria-label warns in dev', () => {
     const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
-    render(
-      <Button
-        size="icon"
-        startIcon={<span aria-hidden="true">+</span>}
-        // ❌ intentionally missing aria-label
-      />,
-    );
+    render(<Button icon={<span aria-hidden="true">+</span>} />);
 
     expect(warn).toHaveBeenCalled();
     warn.mockRestore();

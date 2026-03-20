@@ -1,11 +1,9 @@
 import * as React from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import styles from './button.module.css';
-import type { ButtonCorner, ButtonProps } from './types';
+import type { ButtonProps } from './types';
 import { Slot, cn } from './utils';
 
-/**
- * 判断 children 是否包含可读文本（用于 icon-only 的 a11y 提示）
- */
 function hasReadableText(node: React.ReactNode): boolean {
   if (node === null || node === undefined || typeof node === 'boolean')
     return false;
@@ -16,179 +14,205 @@ function hasReadableText(node: React.ReactNode): boolean {
   return false;
 }
 
-/**
- * Button：生产级可复用按钮组件
- * - variant/size/loading/disabled/icon/asChild
- * - 默认 type="button" 避免表单误提交
- * - loading/disabled 统一语义与交互拦截
- * - focus-visible 清晰可见
- */
-export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  function Button(props, ref) {
-    const {
-      shape,
-      rounded = false,
-      variant = 'default',
-      size = 'md',
-      block = false,
-      disabled = false,
-      loading = false,
-      loadingText,
-      startIcon,
-      endIcon,
-      spinnerPlacement = 'start',
-      asChild = false,
+interface LoadingConfig {
+  loading: boolean;
+  delay: number;
+}
 
-      className,
-      children,
+function getLoadingConfig(loading: ButtonProps['loading']): LoadingConfig {
+  if (typeof loading === 'object' && loading) {
+    const delay =
+      typeof loading.delay === 'number' && !Number.isNaN(loading.delay)
+        ? loading.delay
+        : 0;
+    return { loading: delay <= 0, delay };
+  }
+  return { loading: !!loading, delay: 0 };
+}
 
-      // 原生 props（我们需要包一层以实现 disabled/loading 的拦截）
-      onClick,
-      onKeyDown,
+export const Button = React.forwardRef<
+  HTMLButtonElement | HTMLAnchorElement,
+  ButtonProps
+>(function Button(props, ref) {
+  const {
+    type = 'default',
+    shape = 'default',
+    size = 'middle',
+    danger = false,
+    ghost = false,
+    block = false,
+    disabled = false,
+    loading = false,
+    icon,
+    iconPlacement = 'start',
+    asChild = false,
+    href,
+    target,
+    htmlType = 'button',
+    className,
+    children,
+    onClick,
+    onKeyDown,
+    ...rest
+  } = props;
 
-      // 原生 button type：默认 button，避免 <form> 内误提交
-      type,
+  const loadingConfig = useMemo(() => getLoadingConfig(loading), [loading]);
+  const [innerLoading, setInnerLoading] = useState(loadingConfig.loading);
 
-      ...rest
-    } = props;
+  useLayoutEffect(() => {
+    let timer: ReturnType<typeof setTimeout> | null = null;
+    if (loadingConfig.delay > 0) {
+      timer = setTimeout(() => {
+        timer = null;
+        setInnerLoading(true);
+      }, loadingConfig.delay);
+    } else {
+      setInnerLoading(loadingConfig.loading);
+    }
+    return () => {
+      if (timer) clearTimeout(timer);
+    };
+  }, [loadingConfig.delay, loadingConfig.loading]);
 
-    const isDisabled = disabled || loading;
-    const resolvedShape: ButtonCorner =
-      shape ?? (rounded ? 'rounded' : 'default');
-    // icon-only 场景的可访问性提示（开发态）
-    if (process.env.NODE_ENV !== 'production') {
-      if (size === 'icon') {
-        const hasText = hasReadableText(children);
-        const ariaLabel = props['aria-label'];
-        if (!hasText && (!ariaLabel || ariaLabel.trim().length === 0)) {
-          // 不强制 throw，避免影响 demo/运行，但会提示使用者补齐 a11y
-          // 你也可以改为 throw new Error(...) 来更严格
-          // eslint-disable-next-line no-console
-          console.warn(
-            '[tzz-element/Button] size="icon" 时建议提供 aria-label（或 children 包含可读文本），以满足无障碍要求。',
-          );
-        }
+  const isDisabled = disabled || innerLoading;
+
+  const buttonRef = useRef<HTMLButtonElement | HTMLAnchorElement>(null);
+
+  useEffect(() => {
+    if (props.autoFocus && buttonRef.current) {
+      buttonRef.current.focus();
+    }
+  }, []);
+
+  if (process.env.NODE_ENV !== 'production') {
+    const isIconOnly = !children && !!icon;
+    if (isIconOnly) {
+      const ariaLabel = props['aria-label'];
+      if (!ariaLabel || ariaLabel.trim().length === 0) {
+        // eslint-disable-next-line no-console
+        console.warn(
+          '[tzz-element/Button] Icon-only button should provide aria-label for accessibility.',
+        );
       }
     }
+  }
 
-    /**
-     * 统一事件拦截：disabled/loading 时阻止交互
-     * - 对于原生 button：disabled 属性即可阻止，但我们仍做防御性拦截（避免 asChild 情况差异）
-     * - 对于 asChild：必须拦截 click/keyboard
-     */
-    const handleClick = (e: React.MouseEvent<any>) => {
-      if (isDisabled) {
-        e.preventDefault();
-        e.stopPropagation();
-        return;
-      }
-      onClick?.(e);
-    };
-
-    const handleKeyDown = (e: React.KeyboardEvent<any>) => {
-      if (isDisabled) {
-        // 禁用态阻止键盘触发（Enter/Space）
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          e.stopPropagation();
-          return;
-        }
-      }
-      onKeyDown?.(e);
-    };
-
-    const shapeClassMap = {
-      default: styles.shapeDefault,
-      rounded: styles.shapeRounded,
-      pill: styles.shapePill,
-    } as const;
-
-    const classes = cn(
-      styles.button,
-      styles[variant],
-      styles[size],
-      shapeClassMap[resolvedShape],
-      block && styles.block,
-      className,
-    );
-
-    // loading 时文案：有 loadingText 则优先，否则沿用 children
-    const content = loading ? loadingText ?? children : children;
-
-    const Spinner = (
-      <span className={styles.iconSlot} aria-hidden="true">
-        <span className={styles.spinner} />
-      </span>
-    );
-
-    const Start =
-      loading && spinnerPlacement === 'start' ? (
-        Spinner
-      ) : startIcon ? (
-        <span className={styles.iconSlot} aria-hidden="true">
-          {startIcon}
-        </span>
-      ) : null;
-
-    const End =
-      loading && spinnerPlacement === 'end' ? (
-        Spinner
-      ) : endIcon ? (
-        <span className={styles.iconSlot} aria-hidden="true">
-          {endIcon}
-        </span>
-      ) : null;
-
-    /**
-     * asChild:
-     * - 注入 className / data-* / aria-* / 事件
-     * - disabled/loading 时设置 aria-disabled 与 tabIndex（避免被聚焦）
-     *
-     * 注意：asChild 会把语义交给 child（例如 <a> / <Link>）。
-     * 组件会尽力提供一致的“禁用交互”行为，但最终语义仍建议由使用者选择正确元素。
-     */
-    const sharedProps = {
-      className: classes,
-      'data-variant': variant,
-      'data-size': size,
-      'data-disabled': isDisabled ? 'true' : 'false',
-      'data-shape': resolvedShape, // ✅ 新增
-      'data-loading': loading ? 'true' : 'false',
-      'aria-busy': loading ? true : undefined,
-      onClick: handleClick,
-      onKeyDown: handleKeyDown,
-      ...rest,
-    } as const;
-
-    if (asChild) {
-      return (
-        <Slot
-          // Slot ref 类型为 HTMLElement，这里为了保持 Button 对外签名为 HTMLButtonElement，使用 cast
-          ref={ref as any}
-          {...(sharedProps as any)}
-          aria-disabled={isDisabled ? true : undefined}
-          tabIndex={isDisabled ? -1 : (rest as any).tabIndex}
-        >
-          {/* asChild 必须是单个 ReactElement */}
-          {children as any}
-        </Slot>
-      );
+  const handleClick = (e: React.MouseEvent<any>) => {
+    if (isDisabled) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
     }
+    onClick?.(e);
+  };
 
+  const handleKeyDown = (e: React.KeyboardEvent<any>) => {
+    if (isDisabled && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
+    onKeyDown?.(e);
+  };
+
+  const isIconOnly = !children && !hasReadableText(children) && !!icon;
+
+  const classes = cn(
+    styles.button,
+    styles[`type-${type}`],
+    styles[`size-${size}`],
+    shape !== 'default' && styles[`shape-${shape}`],
+    danger && styles.danger,
+    ghost && styles.ghost,
+    block && styles.block,
+    isIconOnly && styles.iconOnly,
+    className,
+  );
+
+  const Spinner = (
+    <span className={styles.iconSlot} aria-hidden="true">
+      <span className={styles.spinner} />
+    </span>
+  );
+
+  const iconNode = innerLoading ? (
+    Spinner
+  ) : icon ? (
+    <span className={styles.iconSlot} aria-hidden="true">
+      {icon}
+    </span>
+  ) : null;
+
+  const contentNode = children ? (
+    <span className={styles.content}>{children}</span>
+  ) : null;
+
+  const kids =
+    iconPlacement === 'end' ? (
+      <>
+        {contentNode}
+        {iconNode}
+      </>
+    ) : (
+      <>
+        {iconNode}
+        {contentNode}
+      </>
+    );
+
+  const sharedProps = {
+    className: classes,
+    'data-type': type,
+    'data-size': size,
+    'data-disabled': isDisabled ? 'true' : undefined,
+    'data-loading': innerLoading ? 'true' : undefined,
+    'data-danger': danger ? 'true' : undefined,
+    'aria-busy': innerLoading ? true : undefined,
+    onClick: handleClick,
+    onKeyDown: handleKeyDown,
+    ...rest,
+  } as const;
+
+  if (asChild) {
     return (
-      <button
-        ref={ref}
-        disabled={isDisabled}
+      <Slot
+        ref={ref as any}
         {...(sharedProps as any)}
-        // ✅ eslint-plugin-react 认可：静态字面量 / 简单三元（且最终返回字面量）
-        type={
-          type === 'submit' ? 'submit' : type === 'reset' ? 'reset' : 'button'
-        }
+        aria-disabled={isDisabled ? true : undefined}
+        tabIndex={isDisabled ? -1 : undefined}
       >
-        {Start}
-        {content}
-        {End}
-      </button>
+        {children as any}
+      </Slot>
     );
-  },
-);
+  }
+
+  if (href !== undefined && !isDisabled) {
+    return (
+      <a
+        ref={ref as React.Ref<HTMLAnchorElement>}
+        href={href}
+        target={target}
+        {...(sharedProps as any)}
+      >
+        {kids}
+      </a>
+    );
+  }
+
+  return (
+    <button
+      ref={ref as React.Ref<HTMLButtonElement>}
+      disabled={isDisabled}
+      type={
+        htmlType === 'submit'
+          ? 'submit'
+          : htmlType === 'reset'
+          ? 'reset'
+          : 'button'
+      }
+      {...(sharedProps as any)}
+    >
+      {kids}
+    </button>
+  );
+});

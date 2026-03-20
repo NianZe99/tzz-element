@@ -5,7 +5,18 @@
     "jsx": "react-jsx",
     "moduleResolution": "Bundler",
     "strict": true,
-    "baseUrl": "."
+    "baseUrl": ".",
+    "paths": {
+      "@mariotzz/tzz-element": ["packages/components/src/index.ts"]
+    },
+    "skipLibCheck": true
   },
-  "include": ["docs", "packages", ".dumirc.ts"]
+  "include": [
+    "docs",
+    "packages/components",
+    "packages/hooks",
+    "packages/theme",
+    "packages/utils",
+    ".dumirc.ts"
+  ]
 }

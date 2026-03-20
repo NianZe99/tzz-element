@@ -1,12 +1,11 @@
 import { Button } from '@mariotzz/tzz-element';
 
 export default () => (
-  <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+  <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+    <Button type="primary">Primary</Button>
     <Button>Default</Button>
-    <Button variant="primary">Primary</Button>
-    <Button variant="secondary">Secondary</Button>
-    <Button variant="ghost">Ghost</Button>
-    <Button variant="link">Link</Button>
-    <Button variant="destructive">Destructive</Button>
+    <Button type="dashed">Dashed</Button>
+    <Button type="text">Text</Button>
+    <Button type="link">Link</Button>
   </div>
 );

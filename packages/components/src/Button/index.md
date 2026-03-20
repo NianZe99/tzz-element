@@ -1,57 +1,65 @@
 ---
-title: Button 按钮
-group:
-  title: 通用
-  order: 1
+category: Components
+title: Button
+subtitle: 按钮
+toc: content
+group: 通用
 ---
 
-# Button
+# Button 按钮
 
-生产级 Button：支持 **variant / size / loading / disabled / icon / asChild**，并内置 focus-visible 与无障碍约束。
+按钮用于触发一个操作或事件，例如提交表单、打开对话框、取消操作等。
 
-## 基础用法
+## 代码演示
 
-<code src="./demos/basic.tsx"></code>
+### 按钮类型
 
-## 尺寸
+<code src="./demos/basic.tsx">基础用法</code>
 
-<code src="./demos/size.tsx"></code>
+### 按钮尺寸
 
-## 加载态
+<code src="./demos/size.tsx">尺寸</code>
 
-<code src="./demos/loading.tsx"></code>
+### 图标按钮
 
-## 图标
+<code src="./demos/icon.tsx">图标</code>
 
-<code src="./demos/icon.tsx"></code>
+### 加载中
 
-## asChild（多态）
+<code src="./demos/loading.tsx">加载状态</code>
 
-<code src="./demos/as-child.tsx"></code>
+### 危险按钮
 
-## 形状 Shape
+<code src="./demos/danger.tsx">危险按钮</code>
 
-<code src="./demos/shape.tsx"></code>
+### 幽灵按钮
+
+<code src="./demos/ghost.tsx">幽灵按钮</code>
+
+### 按钮形状
+
+<code src="./demos/shape.tsx">形状</code>
+
+### 多态渲染
+
+<code src="./demos/as-child.tsx">asChild & href</code>
 
 ## API
 
-| Prop             | Type                                                              |   Default | Description                                    |
-| ---------------- | ----------------------------------------------------------------- | --------: | ---------------------------------------------- |
-| variant          | `default \| primary \| secondary \| ghost \| link \| destructive` | `default` | 视觉变体                                       |
-| size             | `sm \| md \| lg \| icon`                                          |      `md` | 尺寸（icon 为纯图标按钮）                      |
-| block            | `boolean`                                                         |   `false` | 撑满父容器宽度                                 |
-| disabled         | `boolean`                                                         |   `false` | 禁用（asChild 时用 aria-disabled + 阻止交互）  |
-| loading          | `boolean`                                                         |   `false` | 加载态（自动禁用交互，aria-busy）              |
-| loadingText      | `ReactNode`                                                       |         - | loading 文案                                   |
-| startIcon        | `ReactNode`                                                       |         - | 左侧图标                                       |
-| endIcon          | `ReactNode`                                                       |         - | 右侧图标                                       |
-| spinnerPlacement | `start \| end`                                                    |   `start` | spinner 位置                                   |
-| asChild          | `boolean`                                                         |   `false` | 多态渲染（Slot）                               |
-| shape            | `default \| rounded \| pill`                                      | `default` | 形状（圆角风格）                               |
-| rounded          | `boolean`                                                         |   `false` | 语法糖：等价于 `shape="rounded"`（shape 优先） |
-
-## 无障碍说明
-
-- `size="icon"` 且无可读文本时，请提供 `aria-label`。
-- `loading` 会设置 `aria-busy="true"` 并禁用交互。
-- 键盘导航使用 `focus-visible` 显示焦点环（鼠标点击不出现）。
+| 属性          | 说明                     | 类型                                                   | 默认值    |
+| ------------- | ------------------------ | ------------------------------------------------------ | --------- |
+| type          | 按钮类型                 | `default` \| `primary` \| `dashed` \| `text` \| `link` | `default` |
+| shape         | 按钮形状                 | `default` \| `circle` \| `round`                       | `default` |
+| size          | 按钮大小                 | `small` \| `middle` \| `large`                         | `middle`  |
+| danger        | 危险按钮                 | `boolean`                                              | `false`   |
+| ghost         | 幽灵按钮（背景透明）     | `boolean`                                              | `false`   |
+| block         | 撑满父容器宽度           | `boolean`                                              | `false`   |
+| disabled      | 禁用                     | `boolean`                                              | `false`   |
+| loading       | 加载状态                 | `boolean \| { delay: number }`                         | `false`   |
+| icon          | 图标                     | `ReactNode`                                            | -         |
+| iconPlacement | 图标位置                 | `start` \| `end`                                       | `start`   |
+| href          | 链接地址（渲染为 `<a>`） | `string`                                               | -         |
+| target        | 链接打开方式             | `string`                                               | -         |
+| htmlType      | 原生 button 的 type      | `submit` \| `button` \| `reset`                        | `button`  |
+| asChild       | 多态渲染                 | `boolean`                                              | `false`   |
+| onClick       | 点击事件                 | `(e) => void`                                          | -         |

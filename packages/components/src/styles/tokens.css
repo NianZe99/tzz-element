@@ -1,0 +1,95 @@
+:root {
+  /* Colors */
+  --tzz-color-primary: #1677ff;
+  --tzz-color-primary-hover: #4096ff;
+  --tzz-color-primary-active: #0958d9;
+  --tzz-color-primary-bg: #e6f4ff;
+  --tzz-color-primary-border: #91caff;
+  --tzz-color-success: #52c41a;
+  --tzz-color-success-hover: #73d13d;
+  --tzz-color-success-active: #389e0d;
+  --tzz-color-success-bg: #f6ffed;
+  --tzz-color-success-border: #b7eb8f;
+  --tzz-color-warning: #faad14;
+  --tzz-color-warning-hover: #ffc53d;
+  --tzz-color-warning-active: #d48806;
+  --tzz-color-warning-bg: #fffbe6;
+  --tzz-color-warning-border: #ffe58f;
+  --tzz-color-error: #ff4d4f;
+  --tzz-color-error-hover: #ff7875;
+  --tzz-color-error-active: #d9363e;
+  --tzz-color-error-bg: #fff2f0;
+  --tzz-color-error-border: #ffccc7;
+  --tzz-color-text: rgba(0, 0, 0, 88%);
+  --tzz-color-text-secondary: rgba(0, 0, 0, 65%);
+  --tzz-color-text-tertiary: rgba(0, 0, 0, 45%);
+  --tzz-color-text-quaternary: rgba(0, 0, 0, 25%);
+  --tzz-color-border: #d9d9d9;
+  --tzz-color-border-secondary: #f0f0f0;
+  --tzz-color-bg: #fff;
+  --tzz-color-bg-elevated: #fff;
+  --tzz-color-bg-container: #fff;
+  --tzz-color-bg-layout: #f5f5f5;
+  --tzz-color-bg-hover: rgba(0, 0, 0, 4%);
+  --tzz-color-bg-text-hover: rgba(0, 0, 0, 6%);
+  --tzz-color-fill: rgba(0, 0, 0, 15%);
+  --tzz-color-fill-secondary: rgba(0, 0, 0, 6%);
+  --tzz-color-fill-tertiary: rgba(0, 0, 0, 4%);
+  --tzz-color-mask: rgba(0, 0, 0, 45%);
+
+  /* Border radius */
+  --tzz-radius-sm: 4px;
+  --tzz-radius: 6px;
+  --tzz-radius-lg: 8px;
+  --tzz-radius-xl: 12px;
+
+  /* Size (component height) */
+  --tzz-size-sm: 24px;
+  --tzz-size: 32px;
+  --tzz-size-lg: 40px;
+
+  /* Font */
+  --tzz-font-size-sm: 12px;
+  --tzz-font-size: 14px;
+  --tzz-font-size-lg: 16px;
+  --tzz-font-family: -apple-system, blinkmacsystemfont, 'Segoe UI', roboto,
+    'Helvetica Neue', arial, 'Noto Sans', sans-serif;
+  --tzz-line-height: 1.5714;
+
+  /* Spacing */
+  --tzz-spacing-xs: 4px;
+  --tzz-spacing-sm: 8px;
+  --tzz-spacing: 12px;
+  --tzz-spacing-lg: 16px;
+  --tzz-spacing-xl: 24px;
+
+  /* Motion */
+  --tzz-duration-fast: 100ms;
+  --tzz-duration: 200ms;
+  --tzz-duration-slow: 300ms;
+  --tzz-easing: cubic-bezier(0.645, 0.045, 0.355, 1);
+  --tzz-easing-in-out: cubic-bezier(0.645, 0.045, 0.355, 1);
+  --tzz-easing-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+
+  /* Shadow */
+  --tzz-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 3%),
+    0 1px 6px -1px rgba(0, 0, 0, 2%), 0 2px 4px 0 rgba(0, 0, 0, 2%);
+  --tzz-shadow: 0 6px 16px 0 rgba(0, 0, 0, 8%),
+    0 3px 6px -4px rgba(0, 0, 0, 12%), 0 9px 28px 8px rgba(0, 0, 0, 5%);
+  --tzz-shadow-lg: 0 6px 16px 0 rgba(0, 0, 0, 8%),
+    0 3px 6px -4px rgba(0, 0, 0, 12%), 0 9px 28px 8px rgba(0, 0, 0, 5%);
+
+  /* Focus ring */
+  --tzz-ring-width: 2px;
+  --tzz-ring-color: rgba(22, 119, 255, 20%);
+  --tzz-ring-error-color: rgba(255, 77, 79, 20%);
+  --tzz-ring-warning-color: rgba(250, 173, 20, 20%);
+
+  /* Z-index */
+  --tzz-z-dropdown: 1050;
+  --tzz-z-modal: 1000;
+  --tzz-z-modal-mask: 1000;
+  --tzz-z-message: 1010;
+  --tzz-z-tooltip: 1070;
+  --tzz-z-popover: 1030;
+}
