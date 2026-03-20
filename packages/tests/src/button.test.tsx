@@ -93,7 +93,7 @@ describe('Button', () => {
 
   test('renders as <a> when href is provided', () => {
     render(<Button href="https://example.com">Link</Button>);
-    const el = screen.getByText('Link');
+    const el = screen.getByRole('link', { name: 'Link' });
     expect(el.tagName).toBe('A');
     expect(el).toHaveAttribute('href', 'https://example.com');
   });

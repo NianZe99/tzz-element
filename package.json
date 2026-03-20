@@ -67,6 +67,16 @@
   "publishConfig": {
     "access": "public"
   },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "@swc/core",
+      "core-js",
+      "core-js-pure",
+      "esbuild",
+      "less"
+    ]
+  },
   "authors": [
     "Mario<tzz1550455954@gmail.com>"
   ]

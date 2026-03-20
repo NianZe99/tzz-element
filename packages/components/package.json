@@ -22,11 +22,7 @@
     "build": "father build",
     "build:watch": "father dev"
   },
-  "devDependencies": {
-    "antd": "^6.1.1"
-  },
   "peerDependencies": {
-    "antd": ">=6",
     "react": ">=18",
     "react-dom": ">=18"
   },

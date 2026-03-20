@@ -1,12 +1,16 @@
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { defineConfig } from 'vitest/config';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 export default defineConfig({
   resolve: {
     alias: {
-      // ✅ 强制把包名解析到源码入口（不是 es/ lib/）
-      '@mariotzz/tzz-element': new URL(
+      '@mariotzz/tzz-element': path.resolve(
+        __dirname,
         '../components/src/index.ts',
-        import.meta.url,
-      ).pathname,
+      ),
     },
   },
   test: {
