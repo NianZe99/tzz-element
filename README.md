@@ -7,7 +7,6 @@
 
 ## 特性
 
-- 🎨 基于 CSS Variables 的设计令牌系统，支持主题定制
 - 📦 支持 ESM / CJS 双格式输出，按需引入
 - 🔒 使用 TypeScript 编写，提供完整的类型定义
 - 📖 基于 dumi 的在线文档与组件 Demo 演示
